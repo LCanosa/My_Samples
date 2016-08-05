@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<script type="text/javascript">
+	    setInterval(function() { 
+	        $('HomeForm:btnLoadData').click();
+	        }, 1000);
+ 	</script> 
+	<h:form id="HomeForm">
+		<p:panelGrid id="homeTable" styleClass="noborder-table" style="width: 400px;" >
+			<p:row>
+				<p:column colspan="2" style="text-align:center;">
+					<h:outputText value="What time is it " styleClass="title" />
+					<p:commandButton id="btnLoadData" value="NOW" action="#{restClient.getUserTimezones()}" update=":HomeForm:listTimezone">
+				        <f:ajax execute="@form" render=":HomeForm:listTimezone" />
+				    </p:commandButton>
+				    <h:outputText value=" in:" styleClass="title" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:dataTable id="listTimezone" var="timezone" value="#{restClient.userTimezones}" styleClass="noborder-table" style="border:white !important" >
+						<p:column>
+							<h:outputText value="#{timezone.city} (#{timezone.name}) :" />
+						</p:column>
+						<p:column>
+							<h:outputText id="time" value="#{timezone.time}" style="font-weight: bold;" ></h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</ui:composition>

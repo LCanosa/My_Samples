@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="listTimezonesForm">
+		<h:outputText value="Timezone List" styleClass="title" />
+		<p:dataTable id="listTimezone" var="timezone" value="#{restClient.timezones}"
+			editable="true" rowKey="#{timezone.idTimezone}"	tableStyle="table-layout: auto">
+
+			<p:ajax event="rowEdit" listener="#{restClient.updateTimezone(timezone)}"
+				update="listTimezonesForm:listTimezone :listTimezonesForm:errorMessage" />
+			<p:ajax event="rowEditCancel" listener="#{restClient.listTimezones}"
+				update="listTimezonesForm:listTimezone :listTimezonesForm:errorMessage" />
+
+			<p:column headerText="Owner">
+				<h:outputText value="#{timezone.username}" />
+			</p:column>
+			<p:column filterBy="#{timezone.name}" headerText="Name">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{timezone.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="nameInput" value="#{timezone.name}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column  headerText="City">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{timezone.city}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="cityInput" value="#{timezone.city}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column  headerText="Difference to GMT">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{timezone.hourDiff}" />
+					</f:facet>
+					<f:facet name="input">
+						<pe:inputNumber value="#{timezone.hourDiff}" minValue="-12" maxValue="13" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+			<p:column>
+				<p:commandButton icon="ui-icon-circle-close" action="#{restClient.deleteTimezone(timezone)}"
+					update="listTimezonesForm:listTimezone :listTimezonesForm:errorMessage" >
+					<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		<h:outputText id="errorMessage" value="#{restClient.errorMessage}"	styleClass="error" />		
+
+		<p:confirmDialog global="true" style="background-color: darkgrey;">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+</ui:composition>

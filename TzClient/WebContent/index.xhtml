@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="Timezones" /></title>
+</h:head>
+
+<h:body>
+	<h:form id="headerForm">
+		<ui:include src="/includes/header.xhtml"></ui:include>
+		<ui:include src="/includes/navmenu.xhtml"></ui:include>
+	</h:form>
+	<p:outputPanel id="container" style="display: table; margin:5em auto;">
+		<p:outputPanel rendered="#{restClient.page == 'login'}" >
+			<ui:include src="/includes/login.xhtml"></ui:include>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{restClient.page == 'home'}" >
+			<ui:include src="/includes/home.xhtml"></ui:include>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{restClient.page == 'createUser'}" >
+			<ui:include src="/includes/createUser.xhtml"></ui:include>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{restClient.page == 'listUsers'}" >
+			<ui:include src="/includes/listUsers.xhtml"></ui:include>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{restClient.page == 'listTimezones'}" >
+			<ui:include src="/includes/listTimezones.xhtml"></ui:include>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{restClient.page == 'createTimezone'}" >
+			<ui:include src="/includes/createTimezone.xhtml"></ui:include>
+		</p:outputPanel>
+	</p:outputPanel>
+</h:body>
+</html>

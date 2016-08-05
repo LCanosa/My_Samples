@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="createUserForm">
+		<p:panelGrid id="createUser" styleClass="noborder-table" >
+			<p:row>
+				<p:column colspan="2" style="text-align:center;">
+					<h:outputText value="New User" styleClass="title" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="username" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{restClient.newUsr}"></p:inputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="password" />
+				</p:column>
+				<p:column>
+					<p:password value="#{restClient.newPwd}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="rewrite password" />
+				</p:column>
+				<p:column>
+					<p:password value="#{restClient.password2}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2" >
+					<p:commandButton action="#{restClient.createUser}" value="Register" update="@all">
+						<f:ajax execute="@form" />
+					</p:commandButton>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="#{restClient.errorMessage}" styleClass="error" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</ui:composition>

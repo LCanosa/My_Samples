@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="listUserForm">
+		<h:outputText value="User List" styleClass="title" />
+		<p:dataTable id="listUser" var="user" value="#{restClient.users}"
+			editable="true" rowKey="#{user.idUser}"
+			tableStyle="table-layout: auto">
+
+			<p:ajax event="rowEdit" listener="#{restClient.updateUser(user)}"
+				update=":listUserForm:listUser :listUserForm:errorMessage" />
+			<p:ajax event="rowEditCancel" listener="#{restClient.listUsers}"
+				update=":listUserForm:listUser :listUserForm:errorMessage" />
+
+			<p:column filterBy="#{user.username}" headerText="Username">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{user.username}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="usernameInput" value="#{user.username}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Role">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{user.role.description}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:selectOneMenu value="#{user.role.idRole}" style="width:100%">
+							<f:selectItem itemLabel="administrator" itemValue="1" />
+							<f:selectItem itemLabel="user_manager" itemValue="2" />
+							<f:selectItem itemLabel="user" itemValue="3" />
+						</h:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Password">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="*****" />
+					</f:facet>
+					<f:facet name="input">
+						<p:password id="passwordInput" value="#{user.password}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+			<p:column>
+				<p:commandButton icon="ui-icon-circle-close" action="#{restClient.deleteUser(user)}"
+					rendered="#{user.username != restClient.username}" update=":listUserForm:listUser :listUserForm:errorMessage">
+					<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		<h:outputText id="errorMessage" value="#{restClient.errorMessage}"	styleClass="error" />		
+
+		<p:confirmDialog global="true" style="background-color: darkgrey;">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+</ui:composition>

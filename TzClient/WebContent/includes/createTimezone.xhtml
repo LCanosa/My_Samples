@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="createTimezoneForm">
+		<p:panelGrid id="createTimezone" styleClass="noborder-table" >
+			<p:row>
+				<p:column colspan="2" style="text-align:center;">
+					<h:outputText value="New Timezone" styleClass="title" />
+				</p:column>
+			</p:row>
+			<p:row rendered="#{restClient.myRole == 1}">
+				<p:column>
+					<h:outputText value="owner" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu value="#{restClient.idUser}" style="background-color:white" >
+						<f:selectItems value="#{restClient.users}" var="user" itemLabel="#{user.username}" itemValue="#{user.idUser}" style="background-color:white" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="name" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{restClient.name}"></p:inputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="city" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{restClient.city}"></p:inputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="difference to GMT" />
+				</p:column>
+				<p:column>
+					<pe:inputNumber value="#{restClient.hourDiff}" minValue="-12" maxValue="13" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2" >
+					<p:commandButton action="#{restClient.createTimezone}" value="Create" update=":container">
+						<f:ajax execute="@form" />
+					</p:commandButton>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="#{restClient.errorMessage}" styleClass="error" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</ui:composition>
