@@ -1,5 +1,8 @@
 # My Samples
 Samples of code using various technologies 
 
-Timezones: Java REST API with Maven, JPA, JSON
-TzClient: Client of Timezones. Single page Java web application with JSF, Primefaces, JSON
+<b>Timezones</b><br/>
+	Java REST API with <b><i>Maven, JPA, JSON</i></b>
+
+<b>TzClient</b><br/>
+	Client of Timezones. Single page Java web application with <b><i>JSF, Primefaces, JSON</i></b>
