@@ -1,5 +1,5 @@
 # My Samples
-Samples of code using various technologies 
+Samples projects using various technologies 
 
 <b>Timezones</b><br/>
 	Java REST API with <b><i>Maven, JPA, JSON</i></b>
